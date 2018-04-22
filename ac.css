@@ -1,0 +1,88 @@
+body {
+	background-color: #444;
+	text-align: center;
+/*	font-family: Georgia,Palatino,'Palatino Linotype',serif; */
+	font-family: Optima,Segoe,"Segoe UI",Candara,Calibri,Arial,sans-serif;
+	line-height: 1.3em;
+	font-size: 1.1em;
+	}
+
+	
+/** main containers **/
+#cont {
+	margin: 0 auto;
+	width: 850px;
+	background-color: white;
+	text-align: left;
+	-webkit-box-shadow: 0 0 15px rgba(0,0,0,.9);
+	-moz-box-shadow: 0 0 15px rgba(0,0,0,.9);
+	box-shadow: 0 0 15px rgba(0,0,0,.9);
+	}
+
+#header {
+	margin: 0;
+	padding: 15px 0 25px 15px;
+	}
+
+#main {
+	clear: both;
+	}
+
+#tinfo {
+	padding-bottom: 15px;
+}
+
+
+
+#map {
+	width: 100%;
+	height: 300px;
+	margin-bottom: 15px;
+}
+	
+.w1 {
+	clear: left;
+	width: 820px;
+	margin-left: 15px;
+	}
+	
+#footer {
+	padding: 10px 0 5px;
+	color: #666;
+	font-size: 0.7em;
+	}
+	
+/** Heading **/
+h1,h2, h3{
+	margin: 0;
+	padding: 0;
+	font-size: 2em;
+	}
+
+h2 {
+	display: block;
+	margin-top: 15px;
+	font-size: 1em;
+	font-weight: bold;
+	}
+	
+h3 {
+	padding-top: 5px;
+	font-weight: 600;
+	font-size: 1em;
+	color: #333;
+	}
+
+/** tags **/
+
+svg {
+	float: left;
+	margin: 10px 10px 10px 0;
+}
+
+/** Message classes **/
+
+
+
+/** Misc. Styling **/
+

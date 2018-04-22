@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<head>
+ <title>Alternate Clock Designs &amp; Time Systems</title>
+ <link media='screen' href='ac.css' type='text/css' rel='stylesheet' />
+ <script src="svglib.js"></script>
+</head>
+<body>
+ <div id='cont'>
+  <div id='header'>
+   <h1>Alternate Clock Designs &amp; Time Systems</h1>
+  </div>
+
+  <div id='main'>
+
+   <style type='text/css'>
+svg text {
+	font-family: Georgia,Palatino,'Palatino Linotype',serif; 
+	font-size: 13px;
+}
+
+svg .cf, svg .tick {
+	fill: white;
+	stroke: black;
+	stroke-width: 2;
+}
+
+svg .tick {
+	stroke-width: 1;
+}
+
+svg .bg {
+	fill: white;
+}
+
+svg .hour, svg .min {
+	stroke-width: 8;
+	stroke: black;
+}
+
+svg .min {
+	stroke-width: 4;
+}
+
+svg .sec {
+	stroke-width: 2;
+	stroke: red;
+}
+
+svg .dot {
+	fill: black;
+}
+
+   </style>
+
+   <div class='w1'>
+<p>A day has 24 hours in it. That's 1,440 minutes or 86,400 seconds. If you wonder why Americans don't understand the need for using the metric system then ask yourself why you use this inconsistent time measurement system.</p>
+<p>What if we could design a better time system that is easier to read and convert between units? Would it still have the same number of hours, minutes or seconds in a day?</p>
+<p>The clocks below explore some alternative clock designs and time systems.</p>
+   </div>
+
+
+   <div class='w1'><h2>The standard clock</h2>
+<svg id='svgc1' width='200' height='200' >
+<rect class='bg' x='0' y='0' width='200' height='200'/>
+</svg>
+
+    <p>Those who enjoy the metric system find computations regarding time inconsistent. The breakdown of a day into 24 hours containing each 60 minutes and each minute with 60 seconds, while steeped in history, seems arbitrary. The design however still looks great, classic and *ahem* timeless.</p>
+   </div>
+
+
+   <div class='w1'><h2>The 24 hour clock</h2>
+<svg id='svgc1b' width='200' height='200' >
+<rect class='bg' x='0' y='0' width='200' height='200'/>
+</svg>
+
+    <p>I dislike AM / PM. I dislike that the hour hand must go around the face twice in one day. I don't need amazing accuracy with the hour hand. The minute hand gives me that. I would much rather own a wrist watch like this.</p>
+   </div>
+
+
+   <div class='w1'><h2>The decimal (base 10) clock</h2>
+<svg id='svgc2' width='200' height='200' >
+<rect class='bg' x='0' y='0' width='200' height='200'/>
+</svg>
+
+   <p>Let's slice up the day into 10 hours and give each hour 100 minutes and each minute 100 seconds. Look to your left and read the time (really do it!). It's a simplistic pleasure. It's currently 8:62 as I write this. The hour numbers also act as minute and second indicators. This is significantly easier to read. Try and do any kind of calculations and it's a simple matter of shifting the decimal in the correct direction and number of places. The observer will notice that the seconds are shorter/faster - each lasting 86.4% of a classic second.</p>
+   </div>
+
+   <div class='w1'><h2>The binary (base 2) clocks</h2>
+<svg id='svgc3' width='200' height='200' >
+<rect class='bg' x='0' y='0' width='200' height='200'/>
+</svg>
+
+    <p>This one is for those geeks out there. It's not extremely effective since each binary 'second' lasts three hours. It lacks accuracy. These clocks only update upon loading and for their 'seconds'. You'll have to come back within three hours to see a hand move.</p>
+   </div>
+
+
+   <div class='w1'><h2>The hexadecimal (base 16) clock</h2>
+<svg id='svgc4' width='200' height='200' >
+<rect class='bg' x='0' y='0' width='200' height='200'/>
+</svg>
+
+    <p>This is for those who enjoy hexadecimal characters. It uses 16 'hours' with 128 'minutes' and 128 'seconds'. Each hex 'second' lasts 1/3 a classic second. Again the labels should be 1-F</p>
+   </div>
+
+   <div class='w1'>
+    <p>I hope you enjoyed this little exploration of time systems. If you are keen to suggest an additional time system please let me know as it's quite easy to add. If you hack around the code (if that's your thing) you can probably make it display your custom format yourself.</p>
+   </div>
+
+  </div><!-- end of main -->
+
+  <div id='footer' class='w1'>
+   <p>Cyrille M&eacute;dard de Chardon</p>
+  </div>
+
+ </div><!-- end of cont -->
+
+</body>
+
+<script type='text/javascript'>
+
+//clock works
+CW = {};
+
+CW.makeClock = function (target, x, y, r, id_cls, st_cls, tsteps, hours, msteps, mins, secs, tshift) {
+	var i, xbump, ybump, rbump, t, ms, tfrac, conv, min, sec, ms_tick, update;
+
+	//adjust for x,y coorinates relative to center of numbers
+	xbump = -4;
+	ybump = 2;
+
+	//adjust distance of numbers from ticks
+	rbump = 17;
+
+	//create the clock face
+	JSVG.createCirc(target, id_cls, x, y, r, st_cls, {});
+
+	//create the circle that hides the centre of the clock
+	JSVG.createCirc(target, id_cls, x, y, 4, 'dot', {});
+
+
+	for ( i = 1; i <= tsteps; i = i + 1 ) {
+		//create hour ticks
+		JSVG.createLine(target, id_cls + '_t' + i, 0, r - 10, 0, r, st_cls);
+		JSVG.setAttr(id_cls + '_t' + i, 'transform', ' translate(' + x + ' ' + y + ') rotate(' + ( 360 / tsteps * i ) + ')');
+
+		//to understand rotation/translations work from the last rot/trans backwards!
+		JSVG.createText(target, id_cls + '_txt' + i, x + xbump, y + ybump, i, '');
+		JSVG.setAttr(id_cls + '_txt' + i, 'transform', 'rotate(' + (360 / tsteps * i + 270) + ') translate(' + (r - rbump) + ', 0) rotate(-' + ( 360 / tsteps * i + 270) + ')');
+
+	}
+
+	//create minute tick marks
+	for ( i = 1; i <= msteps; i = i + 1 ) {
+		//create minute ticks
+		JSVG.createLine(target, id_cls + '_tm' + i, 0, r - 7 - tshift, 0, r - tshift, 'tick');
+		JSVG.setAttr(id_cls + '_tm' + i, 'transform', ' translate(' + x + ' ' + y + ') rotate(' + ( 360 / msteps * i ) + ')');
+	}
+
+	//time in milliseconds for a 'seconds' hand tick
+	ms_tick = 24 * 60 * 60 * 1000 / hours / mins / secs;
+
+	//the function that updates the position of the needles
+	update = function () {
+
+		//transform current time into a fraction
+		t = new Date()
+		ms = ( ( t.getHours() * 60 + t.getMinutes() ) * 60 + t.getSeconds() ) * 1000 + t.getMilliseconds();
+		tfrac = ms / (24 * 60 * 60 * 1000 );
+		conv = tsteps / hours;
+
+		//rebuild time into custom format
+		//tfrac holds the fraction of the day
+
+		//create hands and place them
+		//display hour
+		JSVG.createLine(target, id_cls + '_hour', 0, 0, 0, r / 2, 'hour');
+		JSVG.setAttr(id_cls + '_hour', 'transform', 'translate(' + x + ' ' + y + ') rotate(' + ( ( tfrac % conv ) / conv * 360 + 180 ) + ')');
+		
+		//display 'minutes'
+		JSVG.createLine(target, id_cls + '_min', 0, 0, 0, r / 1.5, 'min');
+
+		//convert portion of day fraction into minutes fraction
+		min = (( tfrac % conv ) * hours );
+		min = min % 1;
+
+		JSVG.setAttr(id_cls + '_min', 'transform', 'translate(' + x + ' ' + y + ') rotate(' + ( min * 360 + 180 ) + ')');
+
+		//display 'seconds'
+		JSVG.createLine(target, id_cls + '_sec', 0, 0, 0, r / 1.2, 'sec');
+
+		//convert minutes fraction into seconds fraction
+		sec = ( min * mins );
+		sec = sec % 1;
+
+		JSVG.setAttr(id_cls + '_sec', 'transform', 'translate(' + x + ' ' + y + ') rotate(' + ( sec * 360 + 180 ) + ')');
+
+		//set next call
+		setTimeout( update, ms_tick - ( ms % ms_tick ) );
+		//console.log( ms % ms_tick );
+	}
+
+
+	//call next time set in ms%ms_tick milliseconds
+	setTimeout( update, 1000 - ( ms % ms_tick ) );
+
+};
+
+CW.initClocks = function () {
+	
+	CW.makeClock('svgc1', 100, 100, 90, 'clck1', 'cf', 12, 24, 60, 60, 60, 0);
+	CW.makeClock('svgc1b', 100, 100, 90, 'clck2', 'cf', 24, 24, 12, 60, 60, 30);
+	CW.makeClock('svgc2', 100, 100, 90, 'clck3', 'cf', 10, 10, 100, 100, 100, 0);
+	CW.makeClock('svgc3', 100, 100, 90, 'clck4', 'cf', 2, 2, 0, 2, 2, 0);
+	document.getElementById('clck4_txt2').textContent = '0';
+	CW.makeClock('svgc4', 100, 100, 90, 'clck5', 'cf', 16, 16, 128, 128, 128, 0);
+};
+
+window.onload=CW.initClocks;
+
+</script>
+</html>
